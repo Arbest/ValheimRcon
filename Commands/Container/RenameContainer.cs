@@ -2,10 +2,10 @@ namespace ValheimRcon.Commands.Container
 {
     internal class RenameContainer : ContainerRconCommand
     {
-        // Vanilla ZNetView.LoadFields applies "<Component>.<field>" overrides when the object
-        // and the component carry the HasFields flags, so unmodded clients pick up the name.
-        private const string HasFieldsKey = "HasFields";
-        private const string ContainerHasFieldsKey = "Container" + HasFieldsKey;
+        // Vanilla ZNetView.LoadFields applies "<Component>.<field>" overrides when the object carries
+        // "HasFields" and the component "HasFields<Component>", so unmodded clients pick up the name.
+        private const string HasFieldsKey = ZNetView.CustomFieldsStr;
+        private const string ContainerHasFieldsKey = ZNetView.CustomFieldsStr + "Container";
         private const string NameKey = "Container.m_name";
 
         public override string Command => "renameContainer";
