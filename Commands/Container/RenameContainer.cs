@@ -5,8 +5,8 @@ namespace ValheimRcon.Commands.Container
         // Vanilla ZNetView.LoadFields applies "<Component>.<field>" overrides when the object
         // and the component carry the HasFields flags, so unmodded clients pick up the name.
         private const string HasFieldsKey = "HasFields";
-        private const string ContainerHasFieldsKey = nameof(global::Container) + HasFieldsKey;
-        private const string NameKey = nameof(global::Container) + "." + nameof(global::Container.m_name);
+        private const string ContainerHasFieldsKey = "Container" + HasFieldsKey;
+        private const string NameKey = "Container.m_name";
 
         public override string Command => "renameContainer";
 
