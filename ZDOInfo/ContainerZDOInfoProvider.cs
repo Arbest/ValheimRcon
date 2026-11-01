@@ -8,10 +8,10 @@ namespace ValheimRcon.ZDOInfo
         public override void AppendInfo(ZDO zdo, StringBuilder stringBuilder, bool detailed)
         {
             var prefab = ZNetScene.instance.GetPrefab(zdo.GetPrefab()).GetComponentInChildren<Container>();
-            var size = ContainerFields.GetSize(zdo, prefab);
+            var inventory = ContainerFields.LoadInventory(zdo, prefab);
 
             stringBuilder.Append("Container: ");
-            var count = ContainerFields.LoadInventory(zdo, prefab).NrOfItems();
+            var count = inventory.NrOfItems();
             if (count == 0)
             {
                 stringBuilder.Append("<empty>");
@@ -20,7 +20,7 @@ namespace ValheimRcon.ZDOInfo
             {
                 stringBuilder.AppendFormat("{0} items", count);
             }
-            stringBuilder.AppendFormat(", size {0}x{1}", size.x, size.y);
+            stringBuilder.Append(", ").Append(ContainerFields.SizeLabel(inventory));
         }
     }
 }

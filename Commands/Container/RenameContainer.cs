@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace ValheimRcon.Commands.Container
 {
     internal class RenameContainer : ContainerRconCommand
@@ -8,6 +10,10 @@ namespace ValheimRcon.Commands.Container
             "Usage: renameContainer <id:userid> <name> " +
             "-reset " +
             "-force";
+
+        private const int MaxNameLength = 64;
+
+        protected override bool ChangesItems => false;
 
         protected override string HandleInventory(CommandArgs args, ZDO zdo, Inventory inventory, string prefabName)
         {
@@ -34,6 +40,17 @@ namespace ValheimRcon.Commands.Container
             if (hasName == reset)
             {
                 return "Specify either a name or -reset.";
+            }
+
+            if (args.Arguments.Skip(2).Any(a => !a.StartsWith("-")))
+            {
+                return "Put a name with spaces in double quotes.";
+            }
+
+            // Clients render the name as rich text, so tags would change how it looks.
+            if (hasName && (name.Length > MaxNameLength || name.IndexOfAny(new[] { '<', '>' }) >= 0 || name.Any(char.IsControl)))
+            {
+                return $"The name must be at most {MaxNameLength} characters, without <, > or control characters.";
             }
 
             var container = ZNetScene.instance.GetPrefab(zdo.GetPrefab()).GetComponent<global::Container>();

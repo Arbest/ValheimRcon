@@ -251,7 +251,7 @@ ping 100 50 200
 Shows inventory contents of a container by object ID  
 **Usage:** `showContainer <id:userid>`  
 
-The container commands use the container's actual size, including per-object size overrides such as those ContainerSizes sets, and the output shows it (`size 8x3`).
+The container commands use the container's actual size, including per-object size overrides such as those ContainerSizes sets, and the output shows it (`size 8x3`). When stored items lie outside that grid, `showContainer` reports them as `Not listed: N stored items outside the grid.` and the commands that change items refuse to save the container, because saving would delete those items.
 ```
 showContainer 12345:67890
 ```
@@ -330,7 +330,7 @@ Sets the name a container shows in its hover text and inventory title
 - `-force` - bypass ownership checks when container is not in use
 
 **Notes:**
-- Put a name with spaces in double quotes.
+- Put a name with spaces in double quotes. The name is at most 64 characters, without `<`, `>` or control characters.
 - The name is stored as a vanilla component field override on the object, so clients without mods show it too.
 - Players see the new name once the container loads again, for example after they leave the area and come back.
 - The command will refuse to modify containers that are currently in use.

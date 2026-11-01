@@ -10,14 +10,18 @@ namespace ValheimRcon.Commands.Container
         public override string Description => "Shows inventory contents of a container by object ID. " +
             "Usage: showContainer <id:userid>";
 
+        protected override bool ChangesItems => false;
+
         protected override string HandleInventory(CommandArgs args, ZDO zdo, Inventory inventory, string prefabName)
         {
+            var sb = new StringBuilder();
             if (inventory.NrOfItems() == 0)
             {
-                return $"Container is empty, size {inventory.GetWidth()}x{inventory.GetHeight()}.";
+                sb.AppendFormat("Container is empty, {0}.", ContainerFields.SizeLabel(inventory));
+                AppendDropped(sb);
+                return sb.ToString();
             }
 
-            var sb = new StringBuilder();
             ZDOInfoUtil.AppendInfo(zdo, sb);
             sb.AppendLine();
             sb.AppendFormat("Items ({0}):", inventory.NrOfItems());
@@ -33,7 +37,17 @@ namespace ValheimRcon.Commands.Container
                 itemIndex++;
             }
 
+            AppendDropped(sb);
             return sb.ToString().TrimEnd();
+        }
+
+        private void AppendDropped(StringBuilder sb)
+        {
+            if (DroppedOnLoad > 0)
+            {
+                sb.AppendLine();
+                sb.AppendFormat("Not listed: {0} stored items outside the grid.", DroppedOnLoad);
+            }
         }
     }
 }

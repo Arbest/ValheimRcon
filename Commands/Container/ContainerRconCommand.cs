@@ -32,8 +32,21 @@ namespace ValheimRcon.Commands.Container
             }
 
             var inventory = ContainerFields.LoadInventory(zdo, containerComponent);
+            DroppedOnLoad = ContainerFields.CountDropped(zdo, containerComponent, inventory);
+            if (DroppedOnLoad > 0 && ChangesItems)
+            {
+                return $"{DroppedOnLoad} stored items of {prefabName} lie outside its {ContainerFields.SizeLabel(inventory)} grid, " +
+                    "saving it would delete them.";
+            }
+
             return HandleInventory(args, zdo, inventory, prefabName);
         }
+
+        // Commands that only read the items or leave them alone override this, the rest are refused
+        // when the inventory could not hold every stored item.
+        protected virtual bool ChangesItems => true;
+
+        protected int DroppedOnLoad { get; private set; }
 
         protected abstract string HandleInventory(CommandArgs args, ZDO zdo, Inventory inventory, string prefabName);
 
