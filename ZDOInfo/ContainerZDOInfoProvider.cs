@@ -1,24 +1,17 @@
 ﻿using System.Text;
+using ValheimRcon.Commands.Container;
 
 namespace ValheimRcon.ZDOInfo
 {
     internal class ContainerZDOInfoProvider : ZDOInfoProviderBase<Container>
     {
-        private static readonly Inventory TempInventory = new Inventory("", null, 8, 5);
-
         public override void AppendInfo(ZDO zdo, StringBuilder stringBuilder, bool detailed)
         {
-            TempInventory.RemoveAll();
-            var itemsData = zdo.GetByteArray(ZDOVars.s_items, null);
-            if (itemsData != null)
-            {
-                var package = new ZPackage(itemsData);
-                TempInventory.Load(package);
-            }
-            var items = TempInventory.m_inventory;
+            var prefab = ZNetScene.instance.GetPrefab(zdo.GetPrefab()).GetComponentInChildren<Container>();
+            var size = ContainerFields.GetSize(zdo, prefab);
 
             stringBuilder.Append("Container: ");
-            var count = items.Count;
+            var count = ContainerFields.LoadInventory(zdo, prefab).NrOfItems();
             if (count == 0)
             {
                 stringBuilder.Append("<empty>");
@@ -27,6 +20,7 @@ namespace ValheimRcon.ZDOInfo
             {
                 stringBuilder.AppendFormat("{0} items", count);
             }
+            stringBuilder.AppendFormat(", size {0}x{1}", size.x, size.y);
         }
     }
 }

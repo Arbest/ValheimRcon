@@ -134,6 +134,7 @@
     <Compile Include="Commands\Container\ClearContainerInventory.cs" />
     <Compile Include="Commands\Container\RenameContainer.cs" />
     <Compile Include="Commands\Container\ContainerUtils.cs" />
+    <Compile Include="Commands\Container\ContainerFields.cs" />
     <Compile Include="Commands\Players\ShowPlayers.cs" />
     <Compile Include="Commands\SpawnObject.cs" />
     <Compile Include="Commands\Players\TeleportPlayer.cs" />

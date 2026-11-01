@@ -14,7 +14,7 @@ namespace ValheimRcon.Commands.Container
         {
             if (inventory.NrOfItems() == 0)
             {
-                return "Container is empty.";
+                return $"Container is empty, size {inventory.GetWidth()}x{inventory.GetHeight()}.";
             }
 
             var sb = new StringBuilder();

@@ -250,6 +250,8 @@ ping 100 50 200
 ### showContainer
 Shows inventory contents of a container by object ID  
 **Usage:** `showContainer <id:userid>`  
+
+The container commands use the container's actual size, including per-object size overrides such as those ContainerSizes sets, and the output shows it (`size 8x3`).
 ```
 showContainer 12345:67890
 ```

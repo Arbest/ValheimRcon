@@ -31,15 +31,7 @@ namespace ValheimRcon.Commands.Container
                 return $"Object {prefabName} is not a container.";
             }
 
-            var itemsData = zdo.GetByteArray(ZDOVars.s_items, null);
-            var inventory = new Inventory(containerComponent.m_name, containerComponent.m_bkg, containerComponent.m_width, containerComponent.m_height);
-
-            if (itemsData != null)
-            {
-                var package = new ZPackage(itemsData);
-                inventory.Load(package);
-            }
-
+            var inventory = ContainerFields.LoadInventory(zdo, containerComponent);
             return HandleInventory(args, zdo, inventory, prefabName);
         }
 

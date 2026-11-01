@@ -2,12 +2,6 @@ namespace ValheimRcon.Commands.Container
 {
     internal class RenameContainer : ContainerRconCommand
     {
-        // Vanilla ZNetView.LoadFields applies "<Component>.<field>" overrides when the object
-        // and the component carry the HasFields flags, so unmodded clients pick up the name.
-        private const string HasFieldsKey = "HasFields";
-        private const string ContainerHasFieldsKey = "Container" + HasFieldsKey;
-        private const string NameKey = "Container.m_name";
-
         public override string Command => "renameContainer";
 
         public override string Description => "Sets the name a container shows in its hover text and inventory title. " +
@@ -53,11 +47,12 @@ namespace ValheimRcon.Commands.Container
                 return validationError;
             }
 
-            zdo.Set(HasFieldsKey, true);
-            zdo.Set(ContainerHasFieldsKey, true);
-            zdo.Set(NameKey, reset ? container.m_name : name);
+            // Unmodded clients pick the name up through vanilla ZNetView.LoadFields.
+            zdo.Set(ContainerFields.HasFieldsKey, true);
+            zdo.Set(ContainerFields.ContainerHasFieldsKey, true);
+            zdo.Set(ContainerFields.NameKey, reset ? container.m_name : name);
             zdo.SetZdoModified();
-            return $"Name of {prefabName} set to '{zdo.GetString(NameKey)}'";
+            return $"Name of {prefabName} set to '{zdo.GetString(ContainerFields.NameKey)}'";
         }
     }
 }
