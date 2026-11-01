@@ -319,6 +319,27 @@ clearContainer 12345:67890
 clearContainer 12345:67890 -force
 ```
 
+### renameContainer
+Sets the name a container shows in its hover text and inventory title  
+**Usage:** `renameContainer <id:userid> <name> [options]`
+
+**Options:**
+- `-reset` - restore the container's default name
+- `-force` - bypass ownership checks when container is not in use
+
+**Notes:**
+- Put a name with spaces in double quotes.
+- The name is stored as a vanilla component field override on the object, so clients without mods show it too.
+- Players see the new name once the container loads again, for example after they leave the area and come back.
+- The command will refuse to modify containers that are currently in use.
+- By default the command will not modify containers owned by online players; use `-force` to override this check (only works when container is not in use).
+
+```
+renameContainer 12345:67890 Ores
+renameContainer 12345:67890 "Building materials"
+renameContainer 12345:67890 -reset
+```
+
 ---
 
 ## Random Events Commands

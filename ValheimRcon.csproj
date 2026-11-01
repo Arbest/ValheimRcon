@@ -132,6 +132,7 @@
     <Compile Include="Commands\Container\AddItemToContainer.cs" />
     <Compile Include="Commands\Container\RemoveItemFromContainer.cs" />
     <Compile Include="Commands\Container\ClearContainerInventory.cs" />
+    <Compile Include="Commands\Container\RenameContainer.cs" />
     <Compile Include="Commands\Container\ContainerUtils.cs" />
     <Compile Include="Commands\Players\ShowPlayers.cs" />
     <Compile Include="Commands\SpawnObject.cs" />
