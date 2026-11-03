@@ -218,6 +218,23 @@ modifyObject 12345:67890 -tag my_new_tag
 modifyObject 12345:67890 -position 100 50 200 -force
 ```
 
+### calmCreatures
+Clears the anger of aggravated creatures such as dvergr, in the whole world or near a point  
+**Usage:** `calmCreatures [options]`
+
+**Options:**
+- `-near <x> <y> <z> <radius>` - only creatures within the radius
+
+**Notes:**
+- Only creatures that vanilla can aggravate (`BaseAI.m_aggravatable`) and that are angry right now are touched.
+- A creature an online player owns gets the vanilla `SetAggravated` RPC, so the owner clears the flag itself. Run the command again to confirm: a creature still listed was not loaded on its owner.
+- Any other creature has the flag cleared in its saved data.
+
+```
+calmCreatures
+calmCreatures -near 100 50 200 30
+```
+
 ---
 
 ## Chat and Message Commands
